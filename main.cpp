@@ -125,8 +125,12 @@ int main(int argc, char** argv){
 
                 }else
                 if(player == 2){
-                    if(prediction(grille, 1) != 7){
-                        bool success = playTurn(grille, prediction(grille, 1), 2);
+                    bool success;
+                    if(prediction(grille, 1) != 10){
+                        success = playTurn(grille, prediction(grille, 1), 2);
+                    }else
+                    if(prediction(grille, 2) != 10){
+                        success = playTurn(grille, prediction(grille, 2), 2);
                     }else{
                         random_choice(grille);
                     }
@@ -246,36 +250,36 @@ int prediction(int grid[7][6], int player){
     for(i = 0; i < 7 ; i++){
         for(j = 5; j > 2; j--){
             if(grid[i][j] == player && grid[i][j-1] == player && grid[i][j-2] == player && grid[i][j-3] == 0)
-                return i;
+                return i+1;
         }
     }
     for(i = 0; i < 4 ; i++){
         for(j = 0; j < 6; j++){
             if(grid[i][j] == player && grid[i+1][j] == player && grid[i+2][j] == player && grid[i+3][j] == 0)
-                return i+3;
+                return i+4;
         }
     }
     for(i = 0; i < 4 ; i++){
         for(j = 0; j < 3; j++){
             if(grid[i][j] == player && grid[i+1][j+1] == player && grid[i+2][j+2] == player && grid[i+3][j+3] == 0)
-                return i+3;
+                return i+4;
         }
     }
     for(i = 0; i < 7 ; i++){
         for(j = 5; j > 2; j--){
             if(grid[i][j] == player && grid[i+1][j-1] == player && grid[i+2][j-2] == player && grid[i+3][j-3] == 0)
-                return i+3;
+                return i+4;
         }
     }
 
-    return 7;
+    return 10;
 }
 
 void random_choice(int grid[7][6]){
     bool success = false;
 
     while(!success){
-        int column = rand()%7;
+        int column = rand()%7 + 1;
 
         success = playTurn(grid, column, 2);
     }
